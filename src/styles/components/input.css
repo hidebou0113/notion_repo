@@ -9,8 +9,9 @@
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-sm);
   outline: none;
-  transition: border-color var(--transition-base) ease-in-out,
-              box-shadow var(--transition-base) ease-in-out;
+  transition:
+    border-color var(--transition-base) ease-in-out,
+    box-shadow var(--transition-base) ease-in-out;
 }
 
 .input::placeholder {
@@ -27,7 +28,7 @@
   opacity: 0.5;
 }
 
-.input[type="file"] {
+.input[type='file'] {
   border: 0;
   background-color: transparent;
   font-size: var(--font-sm);

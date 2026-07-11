@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom';
 
 export default function Layout() {
   return (
-    <div className='layout-container'>
+    <div className="layout-container">
       <SideBar />
-      <main className='layout-main'>
+      <main className="layout-main">
         <Outlet />
       </main>
       <SearchModal />

@@ -6,9 +6,10 @@
   border-radius: var(--radius-md);
   font-size: var(--font-sm);
   font-weight: var(--font-medium);
-  transition: background-color var(--transition-base) ease-in-out,
-              color var(--transition-base) ease-in-out,
-              opacity var(--transition-base) ease-in-out;
+  transition:
+    background-color var(--transition-base) ease-in-out,
+    color var(--transition-base) ease-in-out,
+    opacity var(--transition-base) ease-in-out;
   cursor: pointer;
   outline: none;
 }

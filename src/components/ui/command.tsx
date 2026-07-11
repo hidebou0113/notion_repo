@@ -28,9 +28,7 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
     <Dialog {...props}>
       <DialogContent className="command-dialog">
         <DialogTitle className="sr-only">Command Menu</DialogTitle>
-        <Command>
-          {children}
-        </Command>
+        <Command>{children}</Command>
       </DialogContent>
     </Dialog>
   );
@@ -69,11 +67,7 @@ const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-  <CommandPrimitive.Empty
-    ref={ref}
-    className="command-empty"
-    {...props}
-  />
+  <CommandPrimitive.Empty ref={ref} className="command-empty" {...props} />
 ));
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
@@ -120,12 +114,7 @@ const CommandShortcut = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={`command-shortcut ${className || ''}`}
-      {...props}
-    />
-  );
+  return <span className={`command-shortcut ${className || ''}`} {...props} />;
 };
 CommandShortcut.displayName = 'CommandShortcut';
 

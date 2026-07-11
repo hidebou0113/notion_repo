@@ -59,7 +59,7 @@
   pointer-events: none;
 }
 
-.dialog-close[data-state="open"] {
+.dialog-close[data-state='open'] {
   background-color: var(--color-accent);
   color: var(--color-muted-foreground);
 }

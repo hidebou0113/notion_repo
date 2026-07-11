@@ -12,7 +12,7 @@ interface DropdownMenuContextType {
 }
 
 const DropdownMenuContext = React.createContext<DropdownMenuContextType | null>(
-  null
+  null,
 );
 
 // Root Component
@@ -40,7 +40,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       }
       onOpenChange?.(newOpen);
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange],
   );
 
   return (
@@ -113,7 +113,7 @@ const DropdownMenuContent = React.forwardRef<
       alignOffset = 0,
       forceMount,
     },
-    ref
+    ref,
   ) => {
     const context = React.useContext(DropdownMenuContext);
     if (!context)
@@ -237,7 +237,7 @@ const DropdownMenuContent = React.forwardRef<
     );
 
     return createPortal(content, document.body);
-  }
+  },
 );
 DropdownMenuContent.displayName = 'DropdownMenuContent';
 
@@ -312,8 +312,7 @@ const DropdownMenuLabel = React.forwardRef<
 DropdownMenuLabel.displayName = 'DropdownMenuLabel';
 
 // CheckboxItem Component
-interface DropdownMenuCheckboxItemProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface DropdownMenuCheckboxItemProps extends React.HTMLAttributes<HTMLDivElement> {
   checked?: boolean;
 }
 
@@ -326,9 +325,9 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     className={`dropdown-menu-checkbox-item ${className || ''}`}
     {...props}
   >
-    <span className='dropdown-menu-checkbox-indicator'>
+    <span className="dropdown-menu-checkbox-indicator">
       {checked && (
-        <FiCheck className='dropdown-menu-checkbox-indicator-icon' size={16} />
+        <FiCheck className="dropdown-menu-checkbox-indicator-icon" size={16} />
       )}
     </span>
     {children}
@@ -346,8 +345,8 @@ const DropdownMenuRadioItem = React.forwardRef<
     className={`dropdown-menu-radio-item ${className || ''}`}
     {...props}
   >
-    <span className='dropdown-menu-radio-indicator'>
-      <FiCircle className='dropdown-menu-radio-indicator-icon' size={8} />
+    <span className="dropdown-menu-radio-indicator">
+      <FiCircle className="dropdown-menu-radio-indicator-icon" size={8} />
     </span>
     {children}
   </div>
@@ -369,8 +368,7 @@ const DropdownMenuSub: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => <>{children}</>;
 
-interface DropdownMenuSubTriggerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface DropdownMenuSubTriggerProps extends React.HTMLAttributes<HTMLDivElement> {
   inset?: boolean;
 }
 
@@ -386,7 +384,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <FiChevronRight className='dropdown-menu-sub-trigger-chevron' size={16} />
+    <FiChevronRight className="dropdown-menu-sub-trigger-chevron" size={16} />
   </div>
 ));
 DropdownMenuSubTrigger.displayName = 'DropdownMenuSubTrigger';

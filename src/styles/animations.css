@@ -130,57 +130,65 @@
 }
 
 /* Animation classes for data-state attributes */
-[data-state="open"] {
-  animation: fadeIn var(--transition-base) ease-out,
-             zoomIn var(--transition-base) ease-out;
+[data-state='open'] {
+  animation:
+    fadeIn var(--transition-base) ease-out,
+    zoomIn var(--transition-base) ease-out;
 }
 
-[data-state="closed"] {
-  animation: fadeOut var(--transition-base) ease-in,
-             zoomOut var(--transition-base) ease-in;
+[data-state='closed'] {
+  animation:
+    fadeOut var(--transition-base) ease-in,
+    zoomOut var(--transition-base) ease-in;
 }
 
 /* Specific animations for different components */
-.animate-dialog-overlay[data-state="open"] {
+.animate-dialog-overlay[data-state='open'] {
   animation: fadeIn var(--transition-base) ease-out;
 }
 
-.animate-dialog-overlay[data-state="closed"] {
+.animate-dialog-overlay[data-state='closed'] {
   animation: fadeOut var(--transition-base) ease-in;
 }
 
-.animate-dialog-content[data-state="open"] {
-  animation: fadeIn var(--transition-base) ease-out,
-             zoomIn var(--transition-base) ease-out,
-             slideInFromTop var(--transition-base) ease-out;
+.animate-dialog-content[data-state='open'] {
+  animation:
+    fadeIn var(--transition-base) ease-out,
+    zoomIn var(--transition-base) ease-out,
+    slideInFromTop var(--transition-base) ease-out;
 }
 
-.animate-dialog-content[data-state="closed"] {
-  animation: fadeOut var(--transition-base) ease-in,
-             zoomOut var(--transition-base) ease-in,
-             slideOutToTop var(--transition-base) ease-in;
+.animate-dialog-content[data-state='closed'] {
+  animation:
+    fadeOut var(--transition-base) ease-in,
+    zoomOut var(--transition-base) ease-in,
+    slideOutToTop var(--transition-base) ease-in;
 }
 
-.animate-dropdown[data-state="open"] {
-  animation: fadeIn var(--transition-base) ease-out,
-             zoomIn var(--transition-base) ease-out,
-             slideInFromLeft var(--transition-base) ease-out;
+.animate-dropdown[data-state='open'] {
+  animation:
+    fadeIn var(--transition-base) ease-out,
+    zoomIn var(--transition-base) ease-out,
+    slideInFromLeft var(--transition-base) ease-out;
 }
 
-.animate-dropdown[data-state="closed"] {
-  animation: fadeOut var(--transition-base) ease-in,
-             zoomOut var(--transition-base) ease-in,
-             slideOutToLeft var(--transition-base) ease-in;
+.animate-dropdown[data-state='closed'] {
+  animation:
+    fadeOut var(--transition-base) ease-in,
+    zoomOut var(--transition-base) ease-in,
+    slideOutToLeft var(--transition-base) ease-in;
 }
 
-.animate-popover[data-state="open"] {
-  animation: fadeIn var(--transition-base) ease-out,
-             zoomIn var(--transition-base) ease-out;
+.animate-popover[data-state='open'] {
+  animation:
+    fadeIn var(--transition-base) ease-out,
+    zoomIn var(--transition-base) ease-out;
 }
 
-.animate-popover[data-state="closed"] {
-  animation: fadeOut var(--transition-base) ease-in,
-             zoomOut var(--transition-base) ease-in;
+.animate-popover[data-state='closed'] {
+  animation:
+    fadeOut var(--transition-base) ease-in,
+    zoomOut var(--transition-base) ease-in;
 }
 
 /* Transition utilities */
@@ -189,8 +197,9 @@
 }
 
 .transition-colors {
-  transition: background-color var(--transition-base) ease-in-out,
-              color var(--transition-base) ease-in-out;
+  transition:
+    background-color var(--transition-base) ease-in-out,
+    color var(--transition-base) ease-in-out;
 }
 
 .transition-all {

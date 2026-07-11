@@ -2,48 +2,48 @@ import '../styles/pages/auth.css';
 
 export default function Signin() {
   return (
-    <div className='auth-container'>
-      <div className='auth-wrapper'>
-        <h2 className='auth-title'>Notionクローン</h2>
-        <div className='auth-form-container'>
-          <div className='auth-card'>
-            <div className='auth-form'>
+    <div className="auth-container">
+      <div className="auth-wrapper">
+        <h2 className="auth-title">Notionクローン</h2>
+        <div className="auth-form-container">
+          <div className="auth-card">
+            <div className="auth-form">
               <div>
-                <label className='auth-label' htmlFor='email'>
+                <label className="auth-label" htmlFor="email">
                   メールアドレス
                 </label>
-                <div className='auth-input-container'>
+                <div className="auth-input-container">
                   <input
                     onChange={() => {}}
-                    id='email'
-                    name='email'
-                    placeholder='メールアドレス'
+                    id="email"
+                    name="email"
+                    placeholder="メールアドレス"
                     required
-                    type='email'
-                    className='input-auth'
+                    type="email"
+                    className="input-auth"
                   />
                 </div>
               </div>
               <div>
-                <label className='auth-label' htmlFor='password'>
+                <label className="auth-label" htmlFor="password">
                   パスワード
                 </label>
-                <div className='auth-input-container'>
+                <div className="auth-input-container">
                   <input
                     onChange={() => {}}
-                    id='password'
-                    name='password'
-                    placeholder='パスワード'
+                    id="password"
+                    name="password"
+                    placeholder="パスワード"
                     required
-                    type='password'
-                    className='input-auth'
+                    type="password"
+                    className="input-auth"
                   />
                 </div>
               </div>
               <div>
                 <button
                   onClick={() => {}}
-                  className='home-button'
+                  className="home-button"
                   style={{ width: '100%' }}
                 >
                   ログイン

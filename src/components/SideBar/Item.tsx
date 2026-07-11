@@ -21,11 +21,11 @@ export default function Item({
     <div
       className={`sidebar-item ${isActive ? 'active' : ''} note-item`}
       onClick={onClick}
-      role='button'
+      role="button"
       style={{ paddingLeft: '12px' }}
     >
-      <Icon onClick={onIconClick} className='sidebar-item-icon' size={18} />
-      <span className='sidebar-item-label'>{label}</span>
+      <Icon onClick={onIconClick} className="sidebar-item-icon" size={18} />
+      <span className="sidebar-item-label">{label}</span>
       {trailingItem}
     </div>
   );

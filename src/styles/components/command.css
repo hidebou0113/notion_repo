@@ -101,12 +101,12 @@
   outline: none;
 }
 
-.command-item[data-selected="true"] {
+.command-item[data-selected='true'] {
   background-color: var(--color-accent);
   color: var(--color-accent-foreground);
 }
 
-.command-item[data-disabled="true"] {
+.command-item[data-disabled='true'] {
   pointer-events: none;
   opacity: 0.5;
 }

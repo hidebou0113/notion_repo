@@ -28,8 +28,9 @@
   padding: calc(var(--spacing-1) * 1.5) var(--spacing-2);
   font-size: var(--font-sm);
   outline: none;
-  transition: background-color var(--transition-base) ease-in-out,
-              color var(--transition-base) ease-in-out;
+  transition:
+    background-color var(--transition-base) ease-in-out,
+    color var(--transition-base) ease-in-out;
 }
 
 .dropdown-menu-item:focus {
@@ -59,8 +60,9 @@
   padding-right: var(--spacing-2);
   font-size: var(--font-sm);
   outline: none;
-  transition: background-color var(--transition-base) ease-in-out,
-              color var(--transition-base) ease-in-out;
+  transition:
+    background-color var(--transition-base) ease-in-out,
+    color var(--transition-base) ease-in-out;
 }
 
 .dropdown-menu-checkbox-item:focus {
@@ -101,8 +103,9 @@
   padding-right: var(--spacing-2);
   font-size: var(--font-sm);
   outline: none;
-  transition: background-color var(--transition-base) ease-in-out,
-              color var(--transition-base) ease-in-out;
+  transition:
+    background-color var(--transition-base) ease-in-out,
+    color var(--transition-base) ease-in-out;
 }
 
 .dropdown-menu-radio-item:focus {
@@ -170,7 +173,7 @@
   background-color: var(--color-accent);
 }
 
-.dropdown-menu-sub-trigger[data-state="open"] {
+.dropdown-menu-sub-trigger[data-state='open'] {
   background-color: var(--color-accent);
 }
 

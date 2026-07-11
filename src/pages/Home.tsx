@@ -9,21 +9,21 @@ import '../styles/pages/home.css';
 
 export default function Home() {
   return (
-    <Card className='home-card'>
-      <CardHeader className='home-card-header'>
-        <CardTitle className='home-card-title'>
+    <Card className="home-card">
+      <CardHeader className="home-card-header">
+        <CardTitle className="home-card-title">
           新しいノートを作成してみましょう
         </CardTitle>
       </CardHeader>
-      <CardContent className='home-card-content'>
-        <div className='home-input-container'>
+      <CardContent className="home-card-content">
+        <div className="home-input-container">
           <input
-            className='home-input'
-            placeholder='ノートのタイトルを入力'
-            type='text'
+            className="home-input"
+            placeholder="ノートのタイトルを入力"
+            type="text"
             onChange={() => {}}
           />
-          <button className='home-button' onClick={() => {}}>
+          <button className="home-button" onClick={() => {}}>
             <FiPlus size={16} />
             <span>ノート作成</span>
           </button>
