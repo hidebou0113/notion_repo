@@ -1,16 +1,24 @@
 import { useState } from 'react';
 import '../styles/pages/auth.css';
 import { authRepository } from '../modules/auth/auth.repository';
+import { useAtom } from 'jotai';
+import { Navigate } from 'react-router-dom';
+import { currentUserAtom } from '../modules/auth/current-user.state';
 
 export default function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  //登録画面でもログインユーザーのグローバルステートを読めるようにする
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
   const signup = async () => {
     const { user, token } = await authRepository.signup(name, email, password);
-    console.log(user, token);
+    // ユーザー登録に成功したら返ってきたuserをグローバルステートに保存。
+    setCurrentUser(user);
   };
+
+  if (currentUser) return <Navigate to="/" replace />;
 
   return (
     <div className="auth-container">

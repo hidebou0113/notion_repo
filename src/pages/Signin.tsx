@@ -1,20 +1,29 @@
 import { useState } from 'react';
 import { authRepository } from '../modules/auth/auth.repository';
 import '../styles/pages/auth.css';
+import { useAtom } from 'jotai';
+import { currentUserAtom } from '../modules/auth/current-user.state';
+import { Navigate } from 'react-router-dom';
 
 export default function Signin() {
   // setEmailでemailを更新、初期値は空
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  //グルーバルステートから現在のログインユーザーとそれを更新するsetCurrentUserを取り出す。useAtomは他のコンポーネントと共有可能
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
   // ログインボタンを押したときに呼ばれる関数、asyncなので非同期。
   const signin = async () => {
     // authRepositoryでログインAPIの呼び出し。画面に入力されたemailとpasswordをAPI渡す。
     // awaitはAPIの返事が来るまで待つ。const {user, token}は返ってきた結果からuserとtokenを取り出す。
     const { user, token } = await authRepository.signin(email, password);
-    // ログイン成功時にコンソールで確認
-    console.log(user, token);
+    // ログインAPIから返ってきたuserをグローバルステートに保存。これで別の場所からもログイン中のユーザーがいるとわかるようになる。
+    setCurrentUser(user);
   };
+
+  // すでにcurrentUserがいる場合、ログインん画面を表示せず、/に移動させるログイン済みの人が/signinに来たら、ホームに戻す
+  if (currentUser) return <Navigate to="/" replace />;
+
   return (
     <div className="auth-container">
       <div className="auth-wrapper">
