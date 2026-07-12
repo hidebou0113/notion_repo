@@ -25,6 +25,8 @@ interface Props {
   onExpand?: (event: React.MouseEvent) => void;
   // 何階層目のノートか受け取れるようにした
   layer?: number;
+  // 開閉状態を受け取れるようにした
+  expanded?: boolean;
 }
 
 export default function NoteItem({
@@ -32,12 +34,14 @@ export default function NoteItem({
   onCreate,
   onExpand,
   layer = 0,
+  // expandedが渡されなければ閉じているようにする
+  expanded = false,
 }: Props) {
   // ノート項目にマウスがホバーしてるか
   const [isHovered, setIsHovered] = useState(false);
 
   const getIcon = (): IconType => {
-    return isHovered ? FiChevronRight : FiFile;
+    return expanded ? FiChevronDown : isHovered ? FiChevronRight : FiFile;
   };
 
   const menu = (

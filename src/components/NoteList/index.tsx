@@ -3,6 +3,7 @@ import { useNoteStore } from '../../modules/notes/notes.state';
 import NoteItem from './NoteItem';
 import { noteRepository } from '../../modules/notes/note.repository';
 import type { Note } from '../../modules/notes/note.entity';
+import { useState } from 'react';
 
 // layerとparentIdを受け取れるようにした
 interface Props {
@@ -14,15 +15,23 @@ export default function NoteList({ layer = 0, parentId }: Props) {
   // noteStoreを取得し、getAll()で現在のノート一覧を取り出している。
   const noteStore = useNoteStore();
   const notes = noteStore.getAll();
+  // どのノートが開いているか管理する
+  const [expanded, setExpanded] = useState<Map<number, boolean>>(new Map());
 
   // 子ノート作成関数クリックイベントと親ノートのIDを受け取る
   const createChild = async (e: React.MouseEvent, parentId: number) => {
     e.preventDefault();
     // parentIdを渡して、ノート作成APIをよんでる。
     const newNote = await noteRepository.create({ parentId });
-    console.log(newNote);
     // 作成された子ノートをノート一覧のグローバルステートに追加
     noteStore.set([newNote]);
+
+    setExpanded((prev) => {
+      const newExpanded = new Map(prev);
+      // 子ノートを作ったら親のノートの下に子ノートが見えるようにする
+      newExpanded.set(parentId, true);
+      return newExpanded;
+    });
   };
 
   // 子ノート作成処理
@@ -30,8 +39,12 @@ export default function NoteList({ layer = 0, parentId }: Props) {
     e.preventDefault();
     const children = await noteRepository.find({ parentId: note.id });
     if (children == null) return;
-    console.log(children);
     noteStore.set(children);
+    setExpanded((prev) => {
+      const newExpanded = new Map(prev);
+      newExpanded.set(note.id, !prev.get(note.id));
+      return newExpanded;
+    });
   };
 
   return (
@@ -49,9 +62,13 @@ export default function NoteList({ layer = 0, parentId }: Props) {
               onExpand={(e) => fetchChildren(e, note)}
               // NoteItemに今の階層番号を渡す
               layer={layer}
+              expanded={expanded.get(note.id)}
             />
-            {/* 親IDを持つノートだけ表示 */}
-            <NoteList layer={layer + 1} parentId={note.id} />
+            {/* NoteItemにこのノートは開いているか渡している */}
+            {expanded.get(note.id) && (
+              // 親IDを持つノートだけ表示
+              <NoteList layer={layer + 1} parentId={note.id} />
+            )}
           </div>
         ))}
     </>
