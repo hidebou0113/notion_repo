@@ -23,9 +23,16 @@ interface Props {
   onCreate?: (event: React.MouseEvent) => void;
   // ノートの子ノートを開く
   onExpand?: (event: React.MouseEvent) => void;
+  // 何階層目のノートか受け取れるようにした
+  layer?: number;
 }
 
-export default function NoteItem({ note, onCreate, onExpand }: Props) {
+export default function NoteItem({
+  note,
+  onCreate,
+  onExpand,
+  layer = 0,
+}: Props) {
   // ノート項目にマウスがホバーしてるか
   const [isHovered, setIsHovered] = useState(false);
 
@@ -62,7 +69,8 @@ export default function NoteItem({ note, onCreate, onExpand }: Props) {
   return (
     <div
       role="button"
-      style={{ paddingLeft: '12px' }}
+      // 階層に応じて余白を増やす
+      style={{ paddingLeft: `${layer * 12 + 12}px` }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

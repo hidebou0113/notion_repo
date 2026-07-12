@@ -4,7 +4,13 @@ import NoteItem from './NoteItem';
 import { noteRepository } from '../../modules/notes/note.repository';
 import type { Note } from '../../modules/notes/note.entity';
 
-export default function NoteList() {
+// layerとparentIdを受け取れるようにした
+interface Props {
+  layer?: number;
+  parentId?: number;
+}
+
+export default function NoteList({ layer = 0, parentId }: Props) {
   // noteStoreを取得し、getAll()で現在のノート一覧を取り出している。
   const noteStore = useNoteStore();
   const notes = noteStore.getAll();
@@ -31,16 +37,23 @@ export default function NoteList() {
   return (
     <>
       {/* ノート一覧をmapで一件ずつ表示。 */}
-      {notes.map((note) => (
-        <NoteItem
-          key={note.id}
-          note={note}
-          // 各NoteItemにノートのidを親IDとして渡す関数を設定
-          onCreate={(e) => createChild(e, note.id)}
-          // 各NoteItemにどの子ノート取得するか渡す
-          onExpand={(e) => fetchChildren(e, note)}
-        />
-      ))}
+      {notes
+        .filter((note) => note.parentId == parentId)
+        .map((note) => (
+          <div key={note.id}>
+            <NoteItem
+              note={note}
+              // 各NoteItemにノートのidを親IDとして渡す関数を設定
+              onCreate={(e) => createChild(e, note.id)}
+              // 各NoteItemにどの子ノート取得するか渡す
+              onExpand={(e) => fetchChildren(e, note)}
+              // NoteItemに今の階層番号を渡す
+              layer={layer}
+            />
+            {/* 親IDを持つノートだけ表示 */}
+            <NoteList layer={layer + 1} parentId={note.id} />
+          </div>
+        ))}
     </>
   );
 }
