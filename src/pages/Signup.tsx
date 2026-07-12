@@ -11,11 +11,25 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   //登録画面でもログインユーザーのグローバルステートを読めるようにする
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const signup = async () => {
-    const { user, token } = await authRepository.signup(name, email, password);
-    // ユーザー登録に成功したら返ってきたuserをグローバルステートに保存。
-    setCurrentUser(user);
+    setIsSubmitting(true);
+    try {
+      const { user, token } = await authRepository.signup(
+        name,
+        email,
+        password,
+      );
+      // ユーザー登録に成功したら返ってきたuserをグローバルステートに保存。
+      setCurrentUser(user);
+      localStorage.setItem('token', token);
+    } catch (error) {
+      console.error(error);
+      alert('ユーザー登録に失敗しました');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (currentUser) return <Navigate to="/" replace />;
@@ -80,7 +94,7 @@ export default function Signup() {
               </div>
               <div>
                 <button
-                  disabled={!name || !email || !password}
+                  disabled={!name || !email || !password || isSubmitting}
                   onClick={signup}
                   className="home-button"
                   style={{ width: '100%' }}

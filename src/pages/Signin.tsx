@@ -11,14 +11,25 @@ export default function Signin() {
   const [password, setPassword] = useState('');
   //グルーバルステートから現在のログインユーザーとそれを更新するsetCurrentUserを取り出す。useAtomは他のコンポーネントと共有可能
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ログインボタンを押したときに呼ばれる関数、asyncなので非同期。
   const signin = async () => {
-    // authRepositoryでログインAPIの呼び出し。画面に入力されたemailとpasswordをAPI渡す。
-    // awaitはAPIの返事が来るまで待つ。const {user, token}は返ってきた結果からuserとtokenを取り出す。
-    const { user, token } = await authRepository.signin(email, password);
-    // ログインAPIから返ってきたuserをグローバルステートに保存。これで別の場所からもログイン中のユーザーがいるとわかるようになる。
-    setCurrentUser(user);
+    setIsSubmitting(true);
+    try {
+      // authRepositoryでログインAPIの呼び出し。画面に入力されたemailとpasswordをAPI渡す。
+      // awaitはAPIの返事が来るまで待つ。const {user, token}は返ってきた結果からuserとtokenを取り出す。
+      const { user, token } = await authRepository.signin(email, password);
+      // ログインAPIから返ってきたuserをグローバルステートに保存。これで別の場所からもログイン中のユーザーがいるとわかるようになる。
+      setCurrentUser(user);
+      //ログインAPIから返ってきたtokenをブラウザのlocalstorageに保存する。'token':保存するときの名前、キー。token:実際に保存する値。APiから返ってきたアクセストークン
+      localStorage.setItem('token', token);
+    } catch (error) {
+      console.error(error);
+      alert('ログインに失敗しました');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // すでにcurrentUserがいる場合、ログインん画面を表示せず、/に移動させるログイン済みの人が/signinに来たら、ホームに戻す
@@ -71,7 +82,7 @@ export default function Signin() {
                   // ログインボタンをクリックしたらsignin関数を実行する
                   onClick={signin}
                   // emailかpasswordどちらかが空ならボタンを押せないようにする
-                  disabled={!email || !password}
+                  disabled={!email || !password || isSubmitting}
                   className="home-button"
                   style={{ width: '100%' }}
                 >
