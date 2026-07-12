@@ -27,6 +27,8 @@ interface Props {
   layer?: number;
   // 開閉状態を受け取れるようにした
   expanded?: boolean;
+  //親からonClickを受け取れるようにした。ノート行全体をクリックしたら詳細ページへ遷移する用
+  onClick: () => void;
 }
 
 export default function NoteItem({
@@ -36,6 +38,7 @@ export default function NoteItem({
   layer = 0,
   // expandedが渡されなければ閉じているようにする
   expanded = false,
+  onClick,
 }: Props) {
   // ノート項目にマウスがホバーしてるか
   const [isHovered, setIsHovered] = useState(false);
@@ -77,6 +80,7 @@ export default function NoteItem({
       style={{ paddingLeft: `${layer * 12 + 12}px` }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
     >
       <Item
         label={note.title ?? '無題'}

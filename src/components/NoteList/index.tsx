@@ -4,6 +4,7 @@ import NoteItem from './NoteItem';
 import { noteRepository } from '../../modules/notes/note.repository';
 import type { Note } from '../../modules/notes/note.entity';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // layerとparentIdを受け取れるようにした
 interface Props {
@@ -17,6 +18,8 @@ export default function NoteList({ layer = 0, parentId }: Props) {
   const notes = noteStore.getAll();
   // どのノートが開いているか管理する
   const [expanded, setExpanded] = useState<Map<number, boolean>>(new Map());
+  // 別ページへ移動できる
+  const navigate = useNavigate();
 
   // 子ノート作成関数クリックイベントと親ノートのIDを受け取る
   const createChild = async (e: React.MouseEvent, parentId: number) => {
@@ -45,6 +48,12 @@ export default function NoteList({ layer = 0, parentId }: Props) {
       newExpanded.set(note.id, !prev.get(note.id));
       return newExpanded;
     });
+    moveToDetail(note.id);
+  };
+
+  // 指定したノートIDの詳細ページへ移動する関数
+  const moveToDetail = (noteId: number) => {
+    navigate(`/notes/${noteId}`);
   };
 
   return (
@@ -63,6 +72,8 @@ export default function NoteList({ layer = 0, parentId }: Props) {
               // NoteItemに今の階層番号を渡す
               layer={layer}
               expanded={expanded.get(note.id)}
+              // 各NoteItemにクリック時の処理を渡してる
+              onClick={() => moveToDetail(note.id)}
             />
             {/* NoteItemにこのノートは開いているか渡している */}
             {expanded.get(note.id) && (

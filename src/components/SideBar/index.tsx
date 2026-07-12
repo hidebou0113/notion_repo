@@ -4,10 +4,13 @@ import UserItem from './UserItem';
 import { FiPlus, FiSearch } from 'react-icons/fi';
 import { useNoteStore } from '../../modules/notes/notes.state';
 import { noteRepository } from '../../modules/notes/note.repository';
+import { useNavigate } from 'react-router-dom';
 
 export default function SideBar() {
   // ノート一覧を操作するためのnoteStoreを取得
   const noteStore = useNoteStore();
+  const navigate = useNavigate();
+
   // ノート作成を押したときに実行される関数
   const createNote = async () => {
     try {
@@ -15,6 +18,7 @@ export default function SideBar() {
       const newNote = await noteRepository.create({});
       // 作成されたノートをグローバルステートのノート一覧に追加。
       noteStore.set([newNote]);
+      navigate(`/notes/${newNote.id}`);
     } catch (error) {
       console.error(error);
       alert('ノートの作成に失敗しました');

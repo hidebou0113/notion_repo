@@ -9,11 +9,13 @@ import '../styles/pages/home.css';
 import { useState } from 'react';
 import { noteRepository } from '../modules/notes/note.repository';
 import { useNoteStore } from '../modules/notes/notes.state';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const [title, setTitle] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const noteStore = useNoteStore();
+  const navigate = useNavigate();
 
   // ノート作成ボタンを押したときに実行する関数。API通信があるからasync
   const createNote = async () => {
@@ -26,6 +28,7 @@ export default function Home() {
       noteStore.set([newNote]);
       // 作成に成功したら入力欄を空に戻す
       setTitle('');
+      navigate(`/notes/${newNote.id}`);
       console.log(newNote);
     } catch (error) {
       console.error(error);
