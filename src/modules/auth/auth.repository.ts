@@ -31,4 +31,10 @@ export const authRepository = {
     // 呼び出し元にuserとtokenを返す。Userクラスのインスタンスにしてから返す
     return { user: new User(user), token };
   },
+  async getCurrentUser(): Promise<User | undefined> {
+    const result = await api.get('/auth/me');
+    if (!result.data) return undefined;
+
+    return new User(result.data);
+  },
 };
