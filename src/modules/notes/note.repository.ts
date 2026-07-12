@@ -23,4 +23,12 @@ export const noteRepository = {
     // APIから返ってきたノートデータをnre Note(...)でNoteインスタンスに変換して返す。ここでnote.entity.tsのconstructorが動き、createdAtもDateに変換される。
     return new Note(result.data);
   },
+
+  // ノート1件だけを取得するメソッド。取得したいノートのIDを受け取る
+  async findOne(id: number): Promise<Note> {
+    // notes/${id}にGETリクエストを送ってる
+    const result = await api.get(`/notes/${id}`);
+    // APIから返ってきたデータをnew Note(..)でNoteインスタンスに変換して返してる
+    return new Note(result.data);
+  },
 };
