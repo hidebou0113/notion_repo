@@ -14,13 +14,15 @@ import {
 } from 'react-icons/fi';
 import Item from '../SideBar/Item';
 import type { Note } from '../../modules/notes/note.entity';
+import React from 'react';
 
 // NoteItemが受け取るpropsを定義。
 interface Props {
   note: Note;
+  onCreate?: (event: React.MouseEvent) => void;
 }
 
-export default function NoteItem({ note }: Props) {
+export default function NoteItem({ note, onCreate }: Props) {
   const menu = (
     <div className="note-item-menu-container">
       <DropdownMenu>
@@ -41,7 +43,7 @@ export default function NoteItem({ note }: Props) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <div className="note-item-menu-button" role="button" onClick={() => {}}>
+      <div className="note-item-menu-button" role="button" onClick={onCreate}>
         <FiPlus className="note-item-menu-icon" size={16} />
       </div>
     </div>
