@@ -9,6 +9,8 @@ export const useNoteStore = () => {
   const [notes, setNotes] = useAtom(notesAtom);
   // 今入っているノート一覧を返す関数
   const getAll = () => notes;
+  // ノート一覧の中からidが一致する1件を探して返す
+  const getOne = (id: number) => notes.find((note) => note.id === id);
   // 新しいノート一覧を追加・更新するための関数。引数のnewNotesがAPiから返ってきたノートや新しいノートの配列
   const set = (newNotes: Note[]) => {
     // 今までのノート一覧oldNotesをもとに新しい一覧を作り直す。
@@ -27,5 +29,5 @@ export const useNoteStore = () => {
       return Object.values(uniqueNotes);
     });
   };
-  return { getAll, set };
+  return { getAll, getOne, set };
 };
