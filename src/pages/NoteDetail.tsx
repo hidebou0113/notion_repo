@@ -29,10 +29,16 @@ export default function NoteDetail() {
     noteStore.set([note]);
     setIsLoading(false);
   };
+
+  //ノート詳細取得中は画面全体は非表示
+  if (isLoading) return <div />;
+  //ノートが見つからない場合の文言
+  if (!note) return <div>note is not existed</div>;
   return (
     <div className="note-detail-container">
       <div className="note-detail-content">
-        <TitleInput />
+        {/* 取得済みのnoteをTitleInputに渡す */}
+        <TitleInput initialData={note} />
       </div>
     </div>
   );
