@@ -30,6 +30,20 @@ export default function NoteDetail() {
     setIsLoading(false);
   };
 
+  // ノート更新用の関数
+  const updateNote = async (
+    // 更新するノートのID
+    id: number,
+    // 更新したい内容
+    note: { title?: string; content?: string },
+  ) => {
+    // APIに更新リクエストを送信
+    const updatedNote = await noteRepository.update(id, note);
+    // 返ってきたupdatedNoteをグローバルステートに反映
+    noteStore.set([updatedNote]);
+    return updatedNote;
+  };
+
   //ノート詳細取得中は画面全体は非表示
   if (isLoading) return <div />;
   //ノートが見つからない場合の文言
@@ -37,8 +51,11 @@ export default function NoteDetail() {
   return (
     <div className="note-detail-container">
       <div className="note-detail-content">
-        {/* 取得済みのnoteをTitleInputに渡す */}
-        <TitleInput initialData={note} />
+        {/* 取得済みのnoteをTitleInputに渡す ＆ タイトル更新時の処理を渡してる*/}
+        <TitleInput
+          initialData={note}
+          onTitleChange={(title) => updateNote(id, { title })}
+        />
       </div>
     </div>
   );

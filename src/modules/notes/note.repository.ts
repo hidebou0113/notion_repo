@@ -31,4 +31,11 @@ export const noteRepository = {
     // APIから返ってきたデータをnew Note(..)でNoteインスタンスに変換して返してる
     return new Note(result.data);
   },
+  async update(
+    id: number,
+    note: { title?: string; content?: string },
+  ): Promise<Note> {
+    const result = await api.patch(`/notes/${id}`, note);
+    return new Note(result.data);
+  },
 };
