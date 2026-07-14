@@ -57,7 +57,11 @@ export default function NoteDetail() {
           initialData={note}
           onTitleChange={(title) => updateNote(id, { title })}
         />
-        <Editor />
+        {/*  NoteDetailからEditorにこのノートの本文と本文が変わったときの更新処理を渡してる */}
+        <Editor
+          initialContent={note.content}
+          onChange={(content) => updateNote(id, { content })}
+        />
       </div>
     </div>
   );
