@@ -3,11 +3,15 @@ import { Note } from './note.entity';
 
 export const noteRepository = {
   // ノート一覧取得APIを呼び出す
-  async find(options?: { parentId: number }): Promise<Note[]> {
+  async find(options?: {
+    parentId: number;
+    keyword?: string;
+  }): Promise<Note[]> {
     // サーバーからノート一覧を取得し、返ってきたresult.data.notesを1件ずつnew Note(data)に変換
     const result = await api.get('/notes', {
       params: {
         parentId: options?.parentId,
+        keyword: options?.keyword,
       },
     });
     return result.data.notes.map((data: Note) => new Note(data));
