@@ -5,6 +5,7 @@ import { useNoteStore } from '../modules/notes/notes.state';
 import { noteRepository } from '../modules/notes/note.repository';
 import { useEffect, useState } from 'react';
 import { Editor } from '../components/Editor';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function NoteDetail() {
   const params = useParams();
@@ -45,6 +46,9 @@ export default function NoteDetail() {
     return updatedNote;
   };
 
+  //updateNoteを500ミリ秒遅れて実行される関数
+  const debounced = useDebouncedCallback(updateNote, 500);
+
   //ノート詳細取得中は画面全体は非表示
   if (isLoading) return <div />;
   //ノートが見つからない場合の文言
@@ -55,12 +59,12 @@ export default function NoteDetail() {
         {/* 取得済みのnoteをTitleInputに渡す ＆ タイトル更新時の処理を渡してる*/}
         <TitleInput
           initialData={note}
-          onTitleChange={(title) => updateNote(id, { title })}
+          onTitleChange={(title) => debounced(id, { title })}
         />
         {/*  NoteDetailからEditorにこのノートの本文と本文が変わったときの更新処理を渡してる */}
         <Editor
           initialContent={note.content}
-          onChange={(content) => updateNote(id, { content })}
+          onChange={(content) => debounced(id, { content })}
         />
       </div>
     </div>

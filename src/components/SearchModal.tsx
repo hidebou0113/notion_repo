@@ -1,3 +1,4 @@
+import { useDebouncedCallback } from 'use-debounce';
 import type { Note } from '../modules/notes/note.entity';
 import {
   Command,
@@ -23,6 +24,9 @@ export default function SearchModal({
   notes,
   onKeywordChange,
 }: Props) {
+  // 検索欄も1文字ごとに検索APIを叩かないように500ミリ秒待ってから検索する
+  const debounced = useDebouncedCallback(onKeywordChange, 500);
+
   return (
     // Layoutのstateとモーダルの開閉が繋がる。
     <CommandDialog open={isOpen} onOpenChange={onClose}>
@@ -30,7 +34,7 @@ export default function SearchModal({
         <CommandInput
           placeholder={'キーワードで検索'}
           //LayoutのsearchNotesが呼ばれる
-          onValueChange={onKeywordChange}
+          onValueChange={debounced}
         />
         <CommandList>
           <CommandEmpty>条件に一致するノートがありません</CommandEmpty>
