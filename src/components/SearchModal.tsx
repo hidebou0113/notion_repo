@@ -16,6 +16,8 @@ interface Props {
   onClose: () => void;
   notes: Note[];
   onKeywordChange: (keyword: string) => void;
+  // 検索結果のノートを選択したときに実行する関数
+  onItemSelect: (noteId: number) => void;
 }
 
 export default function SearchModal({
@@ -23,6 +25,7 @@ export default function SearchModal({
   onClose,
   notes,
   onKeywordChange,
+  onItemSelect,
 }: Props) {
   // 検索欄も1文字ごとに検索APIを叩かないように500ミリ秒待ってから検索する
   const debounced = useDebouncedCallback(onKeywordChange, 500);
@@ -41,7 +44,11 @@ export default function SearchModal({
           <CommandGroup>
             {/* 検索結果のnotesを1件ずつ表示 */}
             {notes.map((note) => (
-              <CommandItem key={note.id} title={note.title ?? '無題'}>
+              <CommandItem
+                key={note.id}
+                title={note.title ?? '無題'}
+                onSelect={() => onItemSelect(note.id)}
+              >
                 <span>{note.title ?? '無題'}</span>
               </CommandItem>
             ))}

@@ -1,7 +1,7 @@
 import SideBar from './components/SideBar';
 import SearchModal from './components/SearchModal';
 import './styles/layout.css';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from './modules/auth/current-user.state';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export default function Layout() {
   const [isShowModal, setIsShowModal] = useState(false);
   // 検索結果のノート一覧を保存する
   const [searchResult, setSearchResult] = useState<Note[]>([]);
+  const navigate = useNavigate();
 
   // レイアウトが表維持された最初のタイミングでfetchNotes()を1回実行
   useEffect(() => {
@@ -46,6 +47,11 @@ export default function Layout() {
     setSearchResult(notes ?? []);
   };
 
+  const moveToDetail = (noteId: number) => {
+    navigate(`/notes/${noteId}`);
+    setIsShowModal(false);
+  };
+
   //ログインユーザーがいなければ、メイン画面を表示せず/signinに移動。
   if (!currentUser) return <Navigate to="/signin" replace />;
 
@@ -65,6 +71,7 @@ export default function Layout() {
         onClose={() => setIsShowModal(false)}
         notes={searchResult}
         onKeywordChange={searchNotes}
+        onItemSelect={moveToDetail}
       />
     </div>
   );
