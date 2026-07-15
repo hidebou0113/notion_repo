@@ -15,6 +15,8 @@ export default function Layout() {
   const [isLoading, setIsLoading] = useState(false);
   // ノート一覧のグローバツステートを操作
   const noteStore = useNoteStore();
+  // 検索モーダルを表示するかどうか
+  const [isShowModal, setIsShowModal] = useState(false);
 
   // レイアウトが表維持された最初のタイミングでfetchNotes()を1回実行
   useEffect(() => {
@@ -37,11 +39,15 @@ export default function Layout() {
   return (
     <div className="layout-container">
       {/* ノート一覧の取得中はサイドバーを非表示 */}
-      {!isLoading && <SideBar />}
+      {!isLoading && (
+        // SideBarにonSearchButtonClick関数を渡して実行。setIsShowModalがtrueなのでモーダルが開く
+        <SideBar onSearchButtonClick={() => setIsShowModal(true)} />
+      )}
       <main className="layout-main">
         <Outlet />
       </main>
-      <SearchModal />
+      {/* SearchModalに今開いてるかと閉じる処理を渡してる。 */}
+      <SearchModal isOpen={isShowModal} onClose={() => setIsShowModal(false)} />
     </div>
   );
 }

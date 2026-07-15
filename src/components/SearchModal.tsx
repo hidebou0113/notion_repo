@@ -8,9 +8,16 @@ import {
   CommandList,
 } from './ui/command';
 
-export default function SearchModal() {
+// 親から受け取る値
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function SearchModal({ isOpen, onClose }: Props) {
   return (
-    <CommandDialog open={false} onOpenChange={() => {}}>
+    // Layoutのstateとモーダルの開閉が繋がる。
+    <CommandDialog open={isOpen} onOpenChange={onClose}>
       <Command shouldFilter={false}>
         <CommandInput
           placeholder={'キーワードで検索'}

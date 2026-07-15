@@ -6,7 +6,13 @@ import { useNoteStore } from '../../modules/notes/notes.state';
 import { noteRepository } from '../../modules/notes/note.repository';
 import { useNavigate } from 'react-router-dom';
 
-export default function SideBar() {
+// SideBarが親から受け取るpropsの型
+type Props = {
+  onSearchButtonClick: () => void;
+};
+
+// Layoutから渡されたonSearchButtonClickを受け取る
+export default function SideBar({ onSearchButtonClick }: Props) {
   // ノート一覧を操作するためのnoteStoreを取得
   const noteStore = useNoteStore();
   const navigate = useNavigate();
@@ -30,7 +36,8 @@ export default function SideBar() {
         <div>
           <div>
             <UserItem />
-            <Item label="検索" icon={FiSearch} onClick={() => {}} />
+            {/* 検索メニューをクリックしたときに親から渡されたonSearchButtonClickを実行。ここをクリックしたらLayoutのsetIsShowModalがtrueになる */}
+            <Item label="検索" icon={FiSearch} onClick={onSearchButtonClick} />
           </div>
           <div className="sidebar-spacer">
             <NoteList />
