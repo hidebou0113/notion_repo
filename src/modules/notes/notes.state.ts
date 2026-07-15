@@ -29,5 +29,25 @@ export const useNoteStore = () => {
       return Object.values(uniqueNotes);
     });
   };
-  return { getAll, getOne, set };
+  // グローバルステート上のノート一端から指定したノートを削除する関数
+  const deleteNote = (id: number) => {
+    //削除対象はノートに子ノートがある場合、その子ノートたちのIDも探す関数
+    const findChildrenIds = (parentId: number): number[] => {
+      //parentIdが一致するノートを探して、そのIDファ毛を取り出す。
+      const childrenIds = notes
+        .filter((note) => note.parentId === parentId)
+        .map((child) => child.id);
+      // 直接の子ノートだけでなく、孫ノート、さらにその下のノートも探してる
+      return childrenIds.concat(
+        ...childrenIds.map((childrenIds) => findChildrenIds(childrenIds)),
+      );
+    };
+
+    const childrenIds = findChildrenIds(id);
+    // 現在のノート一覧から削除対象のIDに含まれないノートだけを残す。
+    setNotes((oldNotes) =>
+      oldNotes.filter((note) => ![...childrenIds, id].includes(note.id)),
+    );
+  };
+  return { getAll, getOne, set, delete: deleteNote };
 };

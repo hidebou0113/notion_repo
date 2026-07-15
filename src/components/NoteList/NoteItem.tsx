@@ -29,6 +29,8 @@ interface Props {
   expanded?: boolean;
   //親からonClickを受け取れるようにした。ノート行全体をクリックしたら詳細ページへ遷移する用
   onClick: () => void;
+  // 親からonDelete受け取れるように
+  onDelete?: (event: React.MouseEvent) => void;
 }
 
 export default function NoteItem({
@@ -39,6 +41,7 @@ export default function NoteItem({
   // expandedが渡されなければ閉じているようにする
   expanded = false,
   onClick,
+  onDelete,
 }: Props) {
   // ノート項目にマウスがホバーしてるか
   const [isHovered, setIsHovered] = useState(false);
@@ -61,7 +64,8 @@ export default function NoteItem({
           side="right"
           forceMount
         >
-          <DropdownMenuItem onClick={() => {}}>
+          {/* Deleteクリック時に親から渡されたonDeleteを実行 */}
+          <DropdownMenuItem onClick={onDelete}>
             <FiTrash2 className="note-item-delete-icon" size={16} />
             Delete
           </DropdownMenuItem>

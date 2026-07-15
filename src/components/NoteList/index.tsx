@@ -51,6 +51,22 @@ export default function NoteList({ layer = 0, parentId }: Props) {
     moveToDetail(note.id);
   };
 
+  // ノート削除用関数
+  const deleteNote = async (e: React.MouseEvent, noteId: number) => {
+    try {
+      // 余計なクリック処理が走らないように
+      e.preventDefault();
+      // 削除APIの呼び出し
+      await noteRepository.delete(noteId);
+      // API削除成功後にフロント側のグローバルステートからもノート削除
+      noteStore.delete(noteId);
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+      alert('ノートの削除に失敗しました');
+    }
+  };
+
   // 指定したノートIDの詳細ページへ移動する関数
   const moveToDetail = (noteId: number) => {
     navigate(`/notes/${noteId}`);
@@ -74,6 +90,8 @@ export default function NoteList({ layer = 0, parentId }: Props) {
               expanded={expanded.get(note.id)}
               // 各NoteItemにクリック時の処理を渡してる
               onClick={() => moveToDetail(note.id)}
+              // NoteItemに削除処理を渡す
+              onDelete={(e) => deleteNote(e, note.id)}
             />
             {/* NoteItemにこのノートは開いているか渡している */}
             {expanded.get(note.id) && (
