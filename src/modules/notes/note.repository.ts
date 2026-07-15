@@ -42,4 +42,11 @@ export const noteRepository = {
     const result = await api.patch(`/notes/${id}`, note);
     return new Note(result.data);
   },
+  //ノートの削除処理
+  async delete(id: number): Promise<boolean> {
+    // 削除APIの呼び出し
+    await api.delete(`/notes/${id}`);
+    // 呼び出し元に削除成功を伝える
+    return true;
+  },
 };
